@@ -1,11 +1,6 @@
 "use client";
-import { RealtimeAgent, RealtimeSession } from "@openai/agents/realtime";
+import { RealtimeAgent, RealtimeSession, tool } from "@openai/agents/realtime";
 import { useRef, useState } from "react";
-
-const agent = new RealtimeAgent({
-  name: "Assistant",
-  instructions: "You are a helpful assistant.",
-});
 
 export default function Home() {
   const session = useRef<RealtimeSession | null>(null);
@@ -13,6 +8,33 @@ export default function Home() {
   const [history, setHistory] = useState<{ role: string; content: string }[]>(
     []
   );
+
+  // const disconnectSession = tool({
+  //   name: "disconnect_session",
+  //   description: "Disconnect the current session.",
+  //   parameters: {},
+  //   execute: () => {
+  //     if (session.current) {
+  //       console.log(session.current?.history);
+
+  //       session.current?.once("audio_stopped", () => {
+  //         setTimeout(() => {
+  //           session.current?.close();
+  //           session.current = null;
+  //           setConnected(false);
+  //           console.log("Session disconnected.");
+  //         }, 1000); // Small delay to ensure everything is complete
+  //       });
+  //     }
+  //   },
+  // });
+
+  const agent = new RealtimeAgent({
+    name: "Assistant",
+    instructions:
+      "You are a helpful assistant. Ask the user their name, greet them and then say goodbye and end the session.",
+    // tools: [disconnectSession],
+  });
 
   const onConnect = async () => {
     if (connected) {
