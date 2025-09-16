@@ -3,7 +3,7 @@
 import { useConversation } from "@elevenlabs/react";
 import { useCallback, useEffect, useState } from "react";
 
-export function Conversation() {
+export function Conversation({ questions }: { questions: string }) {
   const [messages, setMessages] = useState<{ role: string; message: string }[]>(
     []
   );
@@ -43,15 +43,13 @@ export function Conversation() {
         agentId: "",
         connectionType: "websocket",
         dynamicVariables: {
-          questions: `
-            1. What is MERN Stack?
-          `,
+          questions: questions,
         },
       });
     } catch (error) {
       console.error("Failed to start conversation:", error);
     }
-  }, [conversation]);
+  }, [conversation, questions]);
 
   const stopConversation = useCallback(async () => {
     await conversation.endSession();
