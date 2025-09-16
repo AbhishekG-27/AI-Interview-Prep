@@ -1,15 +1,37 @@
 "use client";
 
 import { useConversation } from "@elevenlabs/react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function Conversation() {
+  const [messages, setMessages] = useState<{ role: string; message: string }[]>(
+    []
+  );
+  const [isConnected, setIsConnected] = useState(false);
   const conversation = useConversation({
-    onConnect: () => console.log("Connected"),
-    onDisconnect: () => console.log("Disconnected"),
-    onMessage: (message) => console.log("Message:", message),
+    onConnect: () => {
+      console.log("Connected");
+      setIsConnected(true);
+    },
+    onDisconnect: () => {
+      setIsConnected(false);
+      console.log("Disconnected");
+    },
+    onMessage: (message) => {
+      setMessages((prev) => [
+        ...prev,
+        { role: message.source, message: message.message },
+      ]);
+    },
     onError: (error) => console.error("Error:", error),
   });
+
+  // Log messages when disconnected
+  useEffect(() => {
+    if (!isConnected && messages.length > 0) {
+      console.log(messages);
+    }
+  }, [isConnected, messages]);
 
   const startConversation = useCallback(async () => {
     try {
@@ -18,8 +40,13 @@ export function Conversation() {
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: "agent_4601k548g29tejxvrwdc11attamh", // Replace with your agent ID
+        agentId: "agent_4601k548g29tejxvrwdc11attamh",
         connectionType: "websocket",
+        dynamicVariables: {
+          questions: `
+            1. What is MERN Stack?
+          `,
+        },
       });
     } catch (error) {
       console.error("Failed to start conversation:", error);
