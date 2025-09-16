@@ -40,7 +40,7 @@ export function Conversation() {
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: "agent_4601k548g29tejxvrwdc11attamh",
+        agentId: "",
         connectionType: "websocket",
         dynamicVariables: {
           questions: `
