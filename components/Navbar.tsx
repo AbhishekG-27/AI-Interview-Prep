@@ -21,7 +21,7 @@ const Navbar = ({ isloggedIn }: { isloggedIn: boolean }) => {
 
   const navigationLinks = [
     { href: "/", label: "Home", icon: Home },
-    { href: "/interview", label: "Create an Interview", icon: BookOpen },
+    { href: "/create-interview", label: "Create an Interview", icon: BookOpen },
     { href: "/contact", label: "Contact", icon: Phone },
     { href: "/about", label: "Our Story", icon: Target },
   ];
@@ -65,7 +65,9 @@ const Navbar = ({ isloggedIn }: { isloggedIn: boolean }) => {
                   className="group flex items-center space-x-1 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-black hover:bg-gray-100 transition-all duration-200 relative overflow-hidden text-sm xl:text-base whitespace-nowrap flex-shrink-0"
                 >
                   <IconComponent className="h-4 w-4 transition-transform duration-200 group-hover:scale-110 flex-shrink-0" />
-                  <span className="font-medium whitespace-nowrap">{link.label}</span>
+                  <span className="font-medium whitespace-nowrap">
+                    {link.label}
+                  </span>
                   <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></div>
                 </Link>
               );
@@ -79,7 +81,9 @@ const Navbar = ({ isloggedIn }: { isloggedIn: boolean }) => {
               className="group relative inline-flex items-center space-x-2 px-4 xl:px-6 py-2 hover:bg-black hover:text-white text-black font-medium rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none border-2 cursor-pointer text-sm xl:text-base"
             >
               <User className="h-4 w-4 transition-transform duration-200 group-hover:scale-110 flex-shrink-0" />
-              <span className="hidden xl:inline">{isloggedIn ? "Log out" : "Sign In"}</span>
+              <span className="hidden xl:inline">
+                {isloggedIn ? "Log out" : "Sign In"}
+              </span>
               <span className="xl:hidden">{isloggedIn ? "Out" : "In"}</span>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-lg transition-opacity duration-300"></div>
             </button>
@@ -139,7 +143,9 @@ const Navbar = ({ isloggedIn }: { isloggedIn: boolean }) => {
                 className="group w-full flex items-center justify-center space-x-3 px-4 py-3 bg-white hover:bg-black hover:text-white text-black border-2 font-medium rounded-lg transition-all duration-300 transform hover:scale-[1.02] focus:outline-none cursor-pointer"
               >
                 <User className="h-5 w-5 transition-transform duration-200 group-hover:scale-110 flex-shrink-0" />
-                <span className="truncate">{isloggedIn ? "Log out" : "Sign In"}</span>
+                <span className="truncate">
+                  {isloggedIn ? "Log out" : "Sign In"}
+                </span>
               </button>
             </div>
           </div>

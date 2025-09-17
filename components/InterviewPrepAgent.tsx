@@ -1,43 +1,24 @@
 "use client";
 
 import { useConversation } from "@elevenlabs/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 
-export function Conversation({
-  questions,
+export function InterviewPrepAgent({
+  username,
   interview_agent_id,
 }: {
-  questions: string;
+  username: string;
   interview_agent_id: string;
 }) {
-  const [messages, setMessages] = useState<{ role: string; message: string }[]>(
-    []
-  );
-  const [isConnected, setIsConnected] = useState(false);
   const conversation = useConversation({
     onConnect: () => {
       console.log("Connected");
-      setIsConnected(true);
     },
     onDisconnect: () => {
-      setIsConnected(false);
       console.log("Disconnected");
-    },
-    onMessage: (message) => {
-      setMessages((prev) => [
-        ...prev,
-        { role: message.source, message: message.message },
-      ]);
     },
     onError: (error) => console.error("Error:", error),
   });
-
-  // Log messages when disconnected
-  useEffect(() => {
-    if (!isConnected && messages.length > 0) {
-      console.log(messages);
-    }
-  }, [isConnected, messages]);
 
   const startConversation = useCallback(async () => {
     try {
@@ -49,13 +30,13 @@ export function Conversation({
         agentId: interview_agent_id,
         connectionType: "websocket",
         dynamicVariables: {
-          questions: questions,
+          username: username,
         },
       });
     } catch (error) {
       console.error("Failed to start conversation:", error);
     }
-  }, [conversation, questions]);
+  }, [conversation, username]);
 
   const stopConversation = useCallback(async () => {
     await conversation.endSession();
