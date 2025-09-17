@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { PrismaClient } from "@/lib/generated/prisma";
 import { getServerSession } from "next-auth";
+import { GenerateQuestions } from "@/lib/utils";
 
 const secret = process.env.WEBHOOK_SECRET!;
 const prisma = new PrismaClient();
@@ -48,16 +49,33 @@ export async function POST(req: NextRequest) {
   }
 
   // Authentication successful (proceed)
-  const analysisData = body.data.analysis;
+  const { level, role, tech_stack, amount } = body.data.analysis;
+
+  const questions = await GenerateQuestions({
+    role,
+    level,
+    techstack: tech_stack,
+    type: "mixed (behavioural and technical)",
+    amount,
+  });
+
+  if (!questions) {
+    return NextResponse.json(
+      { error: "Failed to generate questions" },
+      { status: 500 }
+    );
+  }
+
   const response = await prisma.user.update({
     where: { email: email! },
     data: {
       Interview: {
         create: {
-          level: analysisData.level,
-          role: analysisData.role,
-          techStack: analysisData.tech_stack,
-          amount: analysisData.amount,
+          level: level,
+          role: role,
+          techStack: tech_stack,
+          amount: amount,
+          questions: JSON.parse(questions),
         },
       },
     },
