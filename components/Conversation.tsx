@@ -3,7 +3,13 @@
 import { useConversation } from "@elevenlabs/react";
 import { useCallback, useEffect, useState } from "react";
 
-export function Conversation({ questions }: { questions: string }) {
+export function Conversation({
+  questions,
+  interview_agent_id,
+}: {
+  questions: string;
+  interview_agent_id: string;
+}) {
   const [messages, setMessages] = useState<{ role: string; message: string }[]>(
     []
   );
@@ -40,7 +46,7 @@ export function Conversation({ questions }: { questions: string }) {
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: "",
+        agentId: interview_agent_id,
         connectionType: "websocket",
         dynamicVariables: {
           questions: questions,

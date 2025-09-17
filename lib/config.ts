@@ -1,3 +1,4 @@
 export const config = {
-  openai_api_key: process.env.OPENAI_API_KEY!,
+  question_agent_id: process.env.QUESTION_AGENT_ID!,
+  interview_agent_id: process.env.INTERVIEW_AGENT_ID!,
 };

@@ -12,6 +12,7 @@
     "@elevenlabs/react": "^0.6.2",
     "@openai/agents": "^0.1.2",
     "@prisma/client": "^6.16.1",
+    "crypto-js": "^4.2.0",
     "lucide-react": "^0.544.0",
     "next": "15.5.3",
     "next-auth": "^4.24.11",
