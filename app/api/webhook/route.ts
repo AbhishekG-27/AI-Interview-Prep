@@ -6,12 +6,13 @@ import { GenerateQuestions } from "@/lib/utils";
 
 const secret = process.env.WEBHOOK_SECRET!;
 const prisma = new PrismaClient();
-const session = await getServerSession();
-const email = session?.user?.email;
 
 export async function POST(req: NextRequest) {
   const headers = req.headers.get("ElevenLabs-Signature")?.split(",");
   const body = await req.json();
+
+  const session = await getServerSession();
+  const email = session?.user?.email;
 
   if (!headers || headers.length < 2) {
     return NextResponse.json(
