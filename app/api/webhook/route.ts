@@ -5,6 +5,7 @@ const secret = process.env.WEBHOOK_SECRET!;
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const headers = req.headers.get("ElevenLabs-Signature")?.split(",");
+  const body = await req.json();
 
   if (!headers || headers.length < 2) {
     return NextResponse.json(
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: "Request expired" }, { status: 403 });
   } else {
     // Validate hash
-    const message = `${timestamp}.${req.body}`;
+    const message = `${timestamp}.${body}`;
     const digest =
       "v0=" + crypto.createHmac("sha256", secret).update(message).digest("hex");
     if (signature !== digest) {
@@ -42,8 +43,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   // Authentication successful (proceed)
-
-  const body = await req.json();
   const analysisData = body.data.analysis;
 
   console.log("Analysis Data:", analysisData);
