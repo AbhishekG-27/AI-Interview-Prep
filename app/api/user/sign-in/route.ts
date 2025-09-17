@@ -4,8 +4,8 @@ import { PrismaClient } from "@/lib/generated/prisma";
 const prisma = new PrismaClient();
 
 // check if the user exists in the database and compare the password (sign-in) flow
-export async function POST(req: NextRequest, res: NextResponse) {
-  const reqBody = await req.json();
+export async function POST(request: NextRequest) {
+  const reqBody = await request.json();
   const { email, password } = reqBody;
 
   // find the user in the database

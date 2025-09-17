@@ -3,7 +3,7 @@ import crypto from "crypto";
 
 const secret = process.env.WEBHOOK_SECRET!;
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const headers = req.headers.get("ElevenLabs-Signature")?.split(",");
   const body = await req.json();
 
