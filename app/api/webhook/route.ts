@@ -67,6 +67,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Log the generated questions and body data for debugging
+  console.log({ data: { level, role, tech_stack, amount, questions } });
+
   const response = await prisma.user.update({
     where: { email: email! },
     data: {
