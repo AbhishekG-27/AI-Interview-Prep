@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 // import crypto from "crypto";
 import { PrismaClient } from "@/lib/generated/prisma";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { GenerateQuestions } from "@/lib/utils";
 
 // const secret = process.env.WEBHOOK_SECRET!;
@@ -11,10 +11,10 @@ export async function POST(req: NextRequest) {
   // const headers = req.headers.get("ElevenLabs-Signature")?.split(",");
   const body = await req.json();
 
-  const session = await getServerSession();
-  const email = session?.user?.email;
+  // const session = await getServerSession();
+  // const email = session?.user?.email;
   console.log("Webhook received:", body);
-  console.log("User email from session:", email);
+  // console.log("User email from session:", email);
 
   // if (!headers || headers.length < 2) {
   //   return NextResponse.json(
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
   // }
 
   // Authentication successful (proceed)
-  const { level, role, techstack, amount } = body.data.analysis.data_collection_results;
+  const { level, user_id, role, techstack, amount } = body;
 
   const questions = await GenerateQuestions({
     role,
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
   console.log({ level, role, techstack, amount, questions });
 
   const response = await prisma.user.update({
-    where: { email: email! },
+    where: { email: user_id! },
     data: {
       Interview: {
         create: {

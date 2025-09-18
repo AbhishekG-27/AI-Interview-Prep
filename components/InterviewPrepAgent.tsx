@@ -31,12 +31,13 @@ export function InterviewPrepAgent({
         connectionType: "websocket",
         dynamicVariables: {
           username: username,
+          user_id: username,
         },
       });
     } catch (error) {
       console.error("Failed to start conversation:", error);
     }
-  }, [conversation, username]);
+  }, [conversation, username, interview_agent_id]);
 
   const stopConversation = useCallback(async () => {
     await conversation.endSession();
