@@ -13,6 +13,8 @@ export async function POST(req: NextRequest) {
 
   const session = await getServerSession();
   const email = session?.user?.email;
+  console.log("Webhook received:", body);
+  console.log("User email from session:", email);
 
   // if (!headers || headers.length < 2) {
   //   return NextResponse.json(
@@ -50,12 +52,12 @@ export async function POST(req: NextRequest) {
   // }
 
   // Authentication successful (proceed)
-  const { level, role, tech_stack, amount } = body.data.analysis;
+  const { level, role, techstack, amount } = body.data.analysis;
 
   const questions = await GenerateQuestions({
     role,
     level,
-    techstack: tech_stack,
+    techstack: techstack,
     type: "mixed (behavioural and technical)",
     amount,
   });
@@ -68,7 +70,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Log the generated questions and body data for debugging
-  console.log({ data: { level, role, tech_stack, amount, questions } });
+  console.log({ level, role, techstack, amount, questions });
 
   const response = await prisma.user.update({
     where: { email: email! },
@@ -77,7 +79,7 @@ export async function POST(req: NextRequest) {
         create: {
           level: level,
           role: role,
-          techStack: tech_stack,
+          techStack: techstack,
           amount: amount,
           questions: JSON.parse(questions),
         },
