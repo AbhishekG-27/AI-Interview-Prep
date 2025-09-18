@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
   // }
 
   // Authentication successful (proceed)
-  const { level, role, techstack, amount } = body.data.analysis;
+  const { level, role, techstack, amount } = body.data.analysis.data_collection_results;
 
   const questions = await GenerateQuestions({
     role,
