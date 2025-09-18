@@ -13,9 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Interview Prep",
+  title: "PrepMe - AI Interview Prep",
   description:
     "Prepare for your next interview with AI-powered practice sessions",
+    icons: {
+      icon: '/icon.png',
+    },
 };
 
 export default function RootLayout({

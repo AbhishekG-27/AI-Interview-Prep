@@ -10,7 +10,7 @@ const Createinterview = async () => {
   }
   const agent_id = config.question_agent_id;
   return (
-    <div className="mt-20">
+    <div className="mt-16">
       <InterviewPrepAgent
         interview_agent_id={agent_id}
         username={session?.user?.email || "User"}
