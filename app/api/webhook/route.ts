@@ -8,50 +8,7 @@ import { GenerateQuestions } from "@/lib/utils";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  // const headers = req.headers.get("ElevenLabs-Signature")?.split(",");
   const body = await req.json();
-
-  // const session = await getServerSession();
-  // const email = session?.user?.email;
-  console.log("Webhook received:", body);
-  // console.log("User email from session:", email);
-
-  // if (!headers || headers.length < 2) {
-  //   return NextResponse.json(
-  //     { error: "Missing signature headers" },
-  //     { status: 400 }
-  //   );
-  // }
-
-  // const timestamp = headers?.find((e) => e.startsWith("t="))?.substring(2);
-  // const signature = headers?.find((e) => e.startsWith("v0="));
-  // if (!timestamp || !signature) {
-  //   return NextResponse.json(
-  //     { error: "Missing signature headers" },
-  //     { status: 400 }
-  //   );
-  // }
-
-  // // Validate timestamp
-  // const reqTimestamp = parseInt(timestamp) * 1000;
-  // const tolerance = Date.now() - 30 * 60 * 1000;
-
-  // if (reqTimestamp < tolerance) {
-  //   return NextResponse.json({ error: "Request expired" }, { status: 403 });
-  // } else {
-  //   // Validate hash
-  //   const message = `${timestamp}.${body}`;
-  //   const digest =
-  //     "v0=" + crypto.createHmac("sha256", secret).update(message).digest("hex");
-  //   if (signature !== digest) {
-  //     return NextResponse.json(
-  //       { error: "Request unauthorized" },
-  //       { status: 401 }
-  //     );
-  //   }
-  // }
-
-  // Authentication successful (proceed)
   const { level, user_id, role, techstack, amount } = body;
 
   const questions = await GenerateQuestions({
@@ -80,7 +37,7 @@ export async function POST(req: NextRequest) {
           level: level,
           role: role,
           techStack: techstack,
-          amount: amount,
+          amount: parseInt(amount),
           questions: JSON.parse(questions),
         },
       },
