@@ -1,6 +1,7 @@
 "use client";
 
 import { useConversation } from "@elevenlabs/react";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 export function InterviewPrepAgent({
@@ -10,9 +11,11 @@ export function InterviewPrepAgent({
   username: string;
   interview_agent_id: string;
 }) {
+  const router = useRouter();
   const conversation = useConversation({
     onConnect: () => {
       console.log("Connected");
+      return router.push("/my-interviews");
     },
     onDisconnect: () => {
       console.log("Disconnected");

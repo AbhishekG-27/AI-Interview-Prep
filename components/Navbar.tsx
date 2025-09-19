@@ -21,6 +21,7 @@ const Navbar = ({ isloggedIn }: { isloggedIn: boolean }) => {
 
   const navigationLinks = [
     { href: "/", label: "Home", icon: Home },
+    { href: "/my-interviews", label: "My Interviews", icon: Target },
     { href: "/create-interview", label: "Create an Interview", icon: BookOpen },
     { href: "/contact", label: "Contact", icon: Phone },
     { href: "/about", label: "Our Story", icon: Target },
