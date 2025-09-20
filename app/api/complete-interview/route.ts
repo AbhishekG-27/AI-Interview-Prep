@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const transcript = JSON.parse(body.transcript);
-  const interview_id = body.interview_id;
+  const { interview_id, transcript } = body;
 
   console.log("Received interview completion request:", { interview_id, transcript });
 
