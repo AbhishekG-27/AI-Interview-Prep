@@ -5,7 +5,7 @@
   .xs\:block {
     display: block;
   }
-  
+
   .xs\:hidden {
     display: none;
   }
@@ -32,7 +32,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -41,7 +42,8 @@
 }
 
 @keyframes pulse-slow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -77,6 +79,10 @@
 
 .animate-slide-in-left {
   animation: slideInLeft 0.3s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.6s ease-out forwards;
 }
 
 .animate-float {

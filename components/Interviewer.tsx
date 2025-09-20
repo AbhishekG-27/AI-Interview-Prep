@@ -4,12 +4,16 @@ import { useConversation } from "@elevenlabs/react";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-export function InterviewPrepAgent({
-  username,
+export function Interviewer({
+  interview_id,
   interview_agent_id,
+  questions,
+  username,
 }: {
-  username: string;
+  interview_id: string;
   interview_agent_id: string;
+  questions: string;
+  username: string;
 }) {
   const router = useRouter();
   const conversation = useConversation({
@@ -18,7 +22,7 @@ export function InterviewPrepAgent({
     },
     onDisconnect: () => {
       console.log("Disconnected");
-      return router.push("/my-interviews");
+      return router.push("/interview/" + interview_id);
     },
     onError: (error) => console.error("Error:", error),
   });
@@ -33,14 +37,14 @@ export function InterviewPrepAgent({
         agentId: interview_agent_id,
         connectionType: "websocket",
         dynamicVariables: {
-          username: username,
-          user_id: username,
+          questions: questions,
+          interview_id: interview_id,
         },
       });
     } catch (error) {
       console.error("Failed to start conversation:", error);
     }
-  }, [conversation, username, interview_agent_id]);
+  }, [conversation, interview_agent_id, questions, interview_id]);
 
   const stopConversation = useCallback(async () => {
     await conversation.endSession();

@@ -1,8 +1,8 @@
-interface AuthFormtypes {
+export interface AuthFormtypes {
   type: "sign-in" | "sign-up";
 }
 
-interface Interview {
+export interface Interview {
   id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -12,4 +12,10 @@ interface Interview {
   level: string;
   questions: string[];
   techStack: string[];
+  isCompleted: boolean;
+  interviewAnalysis: string | null;
+}
+
+interface CreateFeedbackParams {
+  transcript: { role: string; content: string }[];
 }
