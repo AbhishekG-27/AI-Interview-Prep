@@ -22,7 +22,7 @@ export function Interviewer({
     },
     onDisconnect: () => {
       console.log("Disconnected");
-      return router.refresh();
+      return router.push("/analysis/" + interview_id);
     },
     onError: (error) => console.error("Error:", error),
   });

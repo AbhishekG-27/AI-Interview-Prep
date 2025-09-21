@@ -85,6 +85,10 @@
   animation: slideInLeft 0.6s ease-out forwards;
 }
 
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }

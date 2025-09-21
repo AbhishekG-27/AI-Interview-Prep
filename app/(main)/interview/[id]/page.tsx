@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { PrismaClient } from "@/lib/generated/prisma";
 import InterviewAnalysis from "@/components/InterviewAnalysis";
+import { AlertCircle } from "lucide-react";
 
 const prisma = new PrismaClient();
 
@@ -19,6 +20,7 @@ const Interview = async ({ params }: { params: { id: string } }) => {
     select: {
       questions: true,
       isCompleted: true,
+      interviewAnalysis: true,
     },
   });
 
@@ -27,11 +29,32 @@ const Interview = async ({ params }: { params: { id: string } }) => {
   }
 
   if (questions.isCompleted) {
-    return (
-      <div className="mt-16">
-        <InterviewAnalysis interview_id={id} />
-      </div>
-    );
+    if (questions.interviewAnalysis && questions.interviewAnalysis.trim() !== "") {
+      return (
+        <div className="mt-16">
+          <InterviewAnalysis analysis={questions.interviewAnalysis} />
+        </div>
+      );
+    } else {
+      return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center mt-16">
+          <div className="max-w-md mx-auto text-center space-y-4 p-6">
+            <AlertCircle className="h-16 w-16 text-yellow-500 mx-auto" />
+            <h2 className="text-2xl font-bold text-gray-900">Analysis Pending</h2>
+            <p className="text-gray-600">
+              Your interview is completed but the analysis is still being processed. 
+              Please check back in a few minutes.
+            </p>
+            <a
+              href={`/interview/${id}`}
+              className="inline-flex items-center px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              Refresh Page
+            </a>
+          </div>
+        </div>
+      );
+    }
   }
 
   const agent_id = config.interview_agent_id;
