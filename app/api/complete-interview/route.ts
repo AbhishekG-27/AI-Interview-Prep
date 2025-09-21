@@ -8,6 +8,8 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const { interview_id, transcript } = body;
 
+  console.log("Transcript:", { transcript });
+
   try {
     // find the interview by id
     const interview = await prisma.interview.findUnique({
