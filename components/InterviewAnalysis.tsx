@@ -44,16 +44,20 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
     const parseAnalysis = () => {
       try {
         setLoading(true);
-        
+
         if (!analysis || analysis.trim() === "") {
           setError("No analysis data provided");
           return;
         }
 
         const parsedData = JSON.parse(analysis);
-        
+
         // Validate the parsed data structure
-        if (!parsedData.totalScore || !parsedData.categoryScores || !Array.isArray(parsedData.categoryScores)) {
+        if (
+          !parsedData.totalScore ||
+          !parsedData.categoryScores ||
+          !Array.isArray(parsedData.categoryScores)
+        ) {
           setError("Invalid analysis data structure");
           return;
         }
@@ -96,20 +100,20 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 8) return "text-green-600 bg-green-50 border-green-200";
-    if (score >= 6) return "text-yellow-600 bg-yellow-50 border-yellow-200";
+    if (score >= 80) return "text-green-600 bg-green-50 border-green-200";
+    if (score >= 60) return "text-yellow-600 bg-yellow-50 border-yellow-200";
     return "text-red-600 bg-red-50 border-red-200";
   };
 
   const getScoreBarColor = (score: number) => {
-    if (score >= 8) return "bg-green-500";
-    if (score >= 6) return "bg-yellow-500";
+    if (score >= 80) return "bg-green-500";
+    if (score >= 60) return "bg-yellow-500";
     return "bg-red-500";
   };
 
   const getTotalScoreColor = (score: number) => {
-    if (score >= 8) return "from-green-500 to-green-600";
-    if (score >= 6) return "from-yellow-500 to-yellow-600";
+    if (score >= 80) return "from-green-500 to-green-600";
+    if (score >= 60) return "from-yellow-500 to-yellow-600";
     return "from-red-500 to-red-600";
   };
 
@@ -166,51 +170,51 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8 animate-fadeIn">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-6 md:mb-8 animate-fadeIn">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 md:mb-4">
             Interview Analysis Report
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Comprehensive feedback and insights from your AI interview session
           </p>
         </div>
 
         {/* Overall Score Card */}
         <div
-          className={`mb-8 transform transition-all duration-700 ${
+          className={`mb-6 md:mb-8 transform transition-all duration-700 ${
             animateCards
               ? "translate-y-0 opacity-100"
               : "translate-y-8 opacity-0"
           }`}
         >
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 border border-gray-100">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">
                 Overall Performance
               </h2>
               <div
-                className={`relative inline-flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br ${getTotalScoreColor(
+                className={`relative inline-flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br ${getTotalScoreColor(
                   analysisData.totalScore
                 )} text-white shadow-lg`}
               >
                 <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-gray-900">
-                      {analysisData.totalScore}/10
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                      {analysisData.totalScore}
                     </div>
-                    <div className="text-sm text-gray-600 font-medium">
-                      Score
+                    <div className="text-xs sm:text-sm text-gray-600 font-medium">
+                      /100
                     </div>
                   </div>
                 </div>
               </div>
               <div className="mt-4">
                 <div className="flex items-center justify-center space-x-2">
-                  <Award className="h-5 w-5 text-yellow-500" />
-                  <span className="text-lg font-semibold text-gray-900">
-                    {analysisData.totalScore >= 8
+                  <Award className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" />
+                  <span className="text-base md:text-lg font-semibold text-gray-900">
+                    {analysisData.totalScore >= 80
                       ? "Excellent Performance"
-                      : analysisData.totalScore >= 6
+                      : analysisData.totalScore >= 60
                       ? "Good Performance"
                       : "Needs Improvement"}
                   </span>
@@ -222,16 +226,16 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
 
         {/* Category Scores */}
         <div
-          className={`mb-8 transform transition-all duration-700 delay-150 ${
+          className={`mb-6 md:mb-8 transform transition-all duration-700 delay-150 ${
             animateCards
               ? "translate-y-0 opacity-100"
               : "translate-y-8 opacity-0"
           }`}
         >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">
             Performance Breakdown
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
             {analysisData.categoryScores.map((category, index) => {
               const IconComponent = getCategoryIcon(category.name);
               return (
@@ -260,7 +264,7 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
                         category.score
                       )} flex-shrink-0 ml-2`}
                     >
-                      {category.score}/10
+                      {category.score}/100
                     </div>
                   </div>
 
@@ -271,7 +275,7 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
                         className={`h-2 rounded-full ${getScoreBarColor(
                           category.score
                         )} transition-all duration-1000 ease-out`}
-                        style={{ width: `${(category.score / 10) * 100}%` }}
+                        style={{ width: `${Math.min(category.score, 100)}%` }}
                       ></div>
                     </div>
                   </div>
@@ -287,21 +291,23 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
 
         {/* Strengths and Areas for Improvement */}
         <div
-          className={`grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 transform transition-all duration-700 delay-300 ${
+          className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8 transform transition-all duration-700 delay-300 ${
             animateCards
               ? "translate-y-0 opacity-100"
               : "translate-y-8 opacity-0"
           }`}
         >
           {/* Strengths */}
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow">
-            <div className="flex items-center space-x-3 mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-shadow">
+            <div className="flex items-center space-x-3 mb-4 md:mb-6">
               <div className="p-2 bg-green-50 rounded-lg border border-green-200">
-                <CheckCircle className="h-6 w-6 text-green-600" />
+                <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-green-600" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Key Strengths</h2>
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">
+                Key Strengths
+              </h2>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               {analysisData.strengths.map((strength, index) => (
                 <div
                   key={index}
@@ -312,24 +318,26 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
                   }`}
                   style={{ animationDelay: `${(index + 5) * 100}ms` }}
                 >
-                  <Star className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <p className="text-gray-700 leading-relaxed">{strength}</p>
+                  <Star className="h-4 w-4 md:h-5 md:w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <p className="text-gray-700 leading-relaxed text-sm md:text-base">
+                    {strength}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Areas for Improvement */}
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow">
-            <div className="flex items-center space-x-3 mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 border border-gray-100 hover:shadow-xl transition-shadow">
+            <div className="flex items-center space-x-3 mb-4 md:mb-6">
               <div className="p-2 bg-blue-50 rounded-lg border border-blue-200">
-                <TrendingUp className="h-6 w-6 text-blue-600" />
+                <TrendingUp className="h-5 w-5 md:h-6 md:w-6 text-blue-600" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">
                 Areas for Growth
               </h2>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               {analysisData.areasForImprovement.map((area, index) => (
                 <div
                   key={index}
@@ -340,8 +348,10 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
                   }`}
                   style={{ animationDelay: `${(index + 8) * 100}ms` }}
                 >
-                  <Target className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
-                  <p className="text-gray-700 leading-relaxed">{area}</p>
+                  <Target className="h-4 w-4 md:h-5 md:w-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <p className="text-gray-700 leading-relaxed text-sm md:text-base">
+                    {area}
+                  </p>
                 </div>
               ))}
             </div>
@@ -356,17 +366,17 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
               : "translate-y-8 opacity-0"
           }`}
         >
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-xl p-6 md:p-8 text-white">
-            <div className="flex items-center space-x-3 mb-6">
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-xl p-4 md:p-6 lg:p-8 text-white">
+            <div className="flex items-center space-x-3 mb-4 md:mb-6">
               <div className="p-2 bg-white/10 rounded-lg">
-                <BarChart3 className="h-6 w-6" />
+                <BarChart3 className="h-5 w-5 md:h-6 md:w-6" />
               </div>
-              <h2 className="text-xl md:text-2xl font-bold">
+              <h2 className="text-lg md:text-xl lg:text-2xl font-bold">
                 Final Assessment
               </h2>
             </div>
             <div className="prose prose-lg prose-invert max-w-none">
-              <p className="text-gray-100 leading-relaxed text-base md:text-lg">
+              <p className="text-gray-100 leading-relaxed text-sm md:text-base lg:text-lg">
                 {analysisData.finalAssessment}
               </p>
             </div>
@@ -375,7 +385,7 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
 
         {/* Action Buttons */}
         <div
-          className={`mt-8 flex flex-col sm:flex-row gap-4 justify-center transform transition-all duration-700 delay-700 ${
+          className={`mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 md:gap-4 justify-center transform transition-all duration-700 delay-700 ${
             animateCards
               ? "translate-y-0 opacity-100"
               : "translate-y-8 opacity-0"
@@ -383,13 +393,13 @@ const InterviewAnalysis = ({ analysis }: InterviewAnalysisProps) => {
         >
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center justify-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+            className="inline-flex items-center justify-center px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm md:text-base"
           >
             Download Report
           </button>
           <button
             onClick={() => window.history.back()}
-            className="inline-flex items-center justify-center px-6 py-3 bg-white text-black border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+            className="inline-flex items-center justify-center px-4 md:px-6 py-2 md:py-3 bg-white text-black border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm md:text-base"
           >
             Back to Interviews
           </button>
