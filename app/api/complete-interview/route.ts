@@ -6,13 +6,7 @@ const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log("Request body:", body);
   const { interview_id, transcript } = body;
-
-  console.log("Received interview completion request:", {
-    interview_id,
-    transcript,
-  });
 
   try {
     // find the interview by id
