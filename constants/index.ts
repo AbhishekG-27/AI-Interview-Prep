@@ -1,4 +1,4 @@
-export const feedbackSchema = {
+export const feedbackSchema = `{
   totalScore: "number (a single overall score)",
   categoryScores: [
     {
@@ -33,4 +33,4 @@ export const feedbackSchema = {
     "...",
   ],
   finalAssessment: "string (a concluding summary or final recommendation)",
-};
+}`;
