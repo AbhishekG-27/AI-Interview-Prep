@@ -4,7 +4,6 @@ import {
   Code,
   FileText,
   CheckCircle,
-  BarChart3,
   User,
   Star,
 } from "lucide-react";
@@ -128,14 +127,6 @@ const InterviewCard = ({ interview }: { interview: Interview }) => {
               {interview.amount} Questions
             </span>
           </div>
-          {interview.interviewAnalysis && (
-            <div className="flex items-center gap-2">
-              <BarChart3 size={18} className="text-blue-500" />
-              <span className="text-base font-medium text-blue-600">
-                Analysis
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Action Button */}

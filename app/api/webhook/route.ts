@@ -41,6 +41,9 @@ export async function POST(req: NextRequest) {
           questions: JSON.parse(questions),
         },
       },
+      interviewsLeft: {
+        decrement: 1,
+      },
     },
   });
 
