@@ -26,6 +26,14 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // first interview mark the interview as completed
+    await prisma.interview.update({
+      where: { id: interview_id },
+      data: {
+        isCompleted: true,
+      },
+    });
+
     // get the interview analysis using the transcript
     const feedback = await createFeedback({ transcript });
     if (!feedback.success) {
@@ -35,11 +43,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // update the interview with the analysis and mark it as completed
+    // update the interview with the analysis
     await prisma.interview.update({
       where: { id: interview_id },
       data: {
-        isCompleted: true,
         interviewAnalysis: feedback.feedback,
       },
     });

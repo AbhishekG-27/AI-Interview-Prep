@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { PrismaClient } from "@/lib/generated/prisma";
 import InterviewAnalysis from "@/components/InterviewAnalysis";
 import { AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 
@@ -45,12 +46,12 @@ const AnalysisPage = async ({ params }: { params: { id: string } }) => {
             This interview hasn't been completed yet. Complete the interview to
             view your analysis.
           </p>
-          <a
+          <Link
             href={`/interview/${id}`}
             className="inline-flex items-center px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
           >
             Continue Interview
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -69,12 +70,12 @@ const AnalysisPage = async ({ params }: { params: { id: string } }) => {
             Your interview is completed but the analysis is still being
             processed. Please check back in a few minutes.
           </p>
-          <a
+          <Link
             href={`/analysis/${id}`}
             className="inline-flex items-center px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
           >
             Refresh
-          </a>
+          </Link>
         </div>
       </div>
     );
