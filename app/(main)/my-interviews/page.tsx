@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { PrismaClient } from "@/lib/generated/prisma";
 import InterviewCard from "@/components/InterviewCard";
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 
@@ -32,9 +33,15 @@ const MyInterviews = async () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
               No interviews found
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               Create your first interview to get started!
             </p>
+            <Link
+              href="/create-interview"
+              className="inline-flex items-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors duration-200"
+            >
+              Create Interview
+            </Link>
           </div>
         </div>
       </div>
